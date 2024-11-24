@@ -121,29 +121,129 @@ rfm_recap_df = create_rfm_recap(main_df)
 # **Visualisasi**
 
 # **1. Yearly Bike Rentals**
+
+# Menghitung total penggunaan sepeda per tahun (pastikan 'yearly_recap_df' sudah terdefinisi)
+yearly_usage = yearly_recap_df.groupby('Year')['Total Rentals'].sum().reset_index()
+
+# Membuat bar chart untuk menghitung pengguna sepeda tiap tahun
+fig_yearly = px.bar(
+    yearly_usage,
+    x='Year',
+    y='Total Rentals',
+    labels={'Year': 'Tahun', 'Total Rentals': 'Total Pengguna'},
+    color='Total Rentals',
+    color_continuous_scale='reds'  # Mengganti palet warna ke merah
+)
+
+# Update layout
+fig_yearly.update_layout(
+    xaxis_title='Tahun',
+    yaxis_title='Total Pengguna Sepeda',
+    plot_bgcolor='white',
+    paper_bgcolor='white',
+    title_font=dict(size=20, family='Arial', color='black'),
+    xaxis=dict(tickmode='linear', tick0=yearly_usage['Year'].min(), dtick=1)
+)
+
+# Menampilkan plot di Streamlit
 st.subheader('📅 Yearly Bike Rentals')
-fig_yearly = px.line(yearly_recap_df, x='Year', y='Total Rentals', 
-                     title="Total Bike Rentals by Year", markers=True, template="plotly_dark")
 st.plotly_chart(fig_yearly)
 
 # **2. Working Day vs Weekend Comparison**
+
+# Menghitung rata-rata penggunaan sepeda per hari kerja vs akhir pekan
+workday_usage = data_df.groupby('is_workingday')['total_users'].mean().reset_index()
+
+# Membuat Pie Chart untuk perbandingan penggunaan sepeda antara hari kerja dan akhir pekan
+fig = px.pie(
+    workday_usage,
+    names='is_workingday',
+    values='total_users',
+    color='is_workingday',  # Menggunakan 'is_workingday' untuk menentukan warna
+    color_discrete_sequence=['#FFCDD2', '#F44336']  # Warna dari merah muda terang ke merah terang
+)
+
+# Memperbarui label dan tampilan
+fig.update_traces(textinfo='percent+label')
+fig.update_layout(
+    title_font=dict(size=20, family='Arial', color='black'),
+    legend_title_text='Hari (0=Weekend, 1=Workday)',
+    plot_bgcolor='white',
+    paper_bgcolor='white'
+)
+
+# Menampilkan Pie Chart di Streamlit
+import streamlit as st
 st.subheader('🚲 Bike Usage on Working Day vs Weekend')
-fig_comparison = px.bar(workingday_weekend_df, x='Day Type', y='total_users', color='Day Type', 
-                        title="Bike Usage Comparison: Working Day vs Weekend", template="plotly_dark")
-st.plotly_chart(fig_comparison)
+st.plotly_chart(fig)
 
 # **3. Bike Rentals by Season**
+
+# Menghitung rata-rata penggunaan sepeda per musim (pastikan 'season_comparison_df' sudah ada)
+seasonal_usage = season_comparison_df.groupby('season')['total_users'].sum().reset_index()
+
+# Membuat bar chart untuk perbandingan penggunaan sepeda berdasarkan musim
+fig_season = px.bar(
+    seasonal_usage,
+    x='season',
+    y='total_users',
+    color='total_users',
+    color_continuous_scale='reds',  # Mengganti palet warna ke merah
+    labels={'season': 'Musim', 'total_users': 'Rata-rata Pengguna Sepeda'}
+)
+
+# Update layout untuk tampilan yang lebih baik
+fig_season.update_layout(
+    xaxis_title='Musim',
+    yaxis_title='Rata-rata Pengguna Sepeda',
+    title_font=dict(size=20, family='Arial', color='black'),
+    plot_bgcolor='white',
+    paper_bgcolor='white'
+)
+
+# Menampilkan bar chart di Streamlit
 st.subheader('🌳 Bike Usage by Season')
-fig_season = px.bar(season_comparison_df, x='season', y='total_users', 
-                    title="Bike Rentals by Season", color='season', template="plotly_dark")
 st.plotly_chart(fig_season)
 
 # **4. Casual vs Registered Users on Working Day vs Weekend**
+
+# Menghitung rata-rata penggunaan sepeda per kategori pengguna pada hari kerja dan akhir pekan
+user_contribution = data_df.groupby(['is_workingday']).agg(
+    casual_users=('casual_users', 'mean'),
+    registered_users=('registered_users', 'mean')
+).reset_index()
+
+# Mengubah data ke format long
+user_contribution_melted = user_contribution.melt(id_vars='is_workingday', value_vars=['casual_users', 'registered_users'],
+                                                  var_name='user_type', value_name='average_users')
+
+# Memperbarui nama tipe pengguna untuk label yang lebih deskriptif
+user_contribution_melted['user_type'] = user_contribution_melted['user_type'].replace({
+    'casual_users': 'Casual Users',
+    'registered_users': 'Registered Users'
+})
+
+# Membuat visualisasi barplot dengan skema warna merah
+fig = px.bar(
+    user_contribution_melted,
+    x='is_workingday',
+    y='average_users',
+    color='user_type',  # Menggunakan user_type sebagai kategori warna
+    barmode='group',
+    color_discrete_sequence=['#FFCDD2', '#F44336'],  # Warna dari merah muda ke merah
+    labels={
+        'is_workingday': 'Hari (0=Weekend, 1=Weekday)',
+        'average_users': 'Rata-rata Jumlah Pengguna',
+        'user_type': 'Tipe Pengguna'
+    },
+)
+
+# Update x-axis ticks
+fig.update_xaxes(tickvals=[0, 1], ticktext=['Akhir Pekan', 'Hari Kerja'])
+
+# Menampilkan plot di Streamlit
 st.subheader('👥 Casual vs Registered Users on Working Day vs Weekend')
-fig_casual_registered = px.bar(casual_registered_comparison_df, x='Day Type', y=['casual_users', 'registered_users'],
-                               title="Casual vs Registered Users: Working Day vs Weekend", 
-                               barmode='group', color='Day Type', template="plotly_dark")
-st.plotly_chart(fig_casual_registered)
+st.plotly_chart(fig)
 
 # RFM Recap Visualization
 st.subheader('RFM Recap')
