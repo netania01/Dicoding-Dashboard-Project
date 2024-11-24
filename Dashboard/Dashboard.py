@@ -12,7 +12,7 @@ from plotly import express as px
 sns.set(style='whitegrid')
 
 # Load dataset
-url = https://raw.githubusercontent.com/netania01/Dicoding-Dashboard-Project/refs/heads/master/Dashboard/all_data.csv
+url = "https://raw.githubusercontent.com/netania01/Dicoding-Dashboard-Project/refs/heads/master/Dashboard/all_data.csv"
 data_df = pd.read_csv(url)
 
 # Memastikan kolom 'date' dalam format datetime
