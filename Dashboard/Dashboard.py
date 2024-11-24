@@ -141,7 +141,6 @@ fig_yearly.update_layout(
     yaxis_title='Total Pengguna Sepeda',
     plot_bgcolor='white',
     paper_bgcolor='white',
-    title_font=dict(size=20, family='Arial', color='black'),
     xaxis=dict(tickmode='linear', tick0=yearly_usage['Year'].min(), dtick=1)
 )
 
@@ -166,7 +165,6 @@ fig = px.pie(
 # Memperbarui label dan tampilan
 fig.update_traces(textinfo='percent+label')
 fig.update_layout(
-    title_font=dict(size=20, family='Arial', color='black'),
     legend_title_text='Hari (0=Weekend, 1=Workday)',
     plot_bgcolor='white',
     paper_bgcolor='white'
@@ -196,7 +194,6 @@ fig_season = px.bar(
 fig_season.update_layout(
     xaxis_title='Musim',
     yaxis_title='Rata-rata Pengguna Sepeda',
-    title_font=dict(size=20, family='Arial', color='black'),
     plot_bgcolor='white',
     paper_bgcolor='white'
 )
