@@ -28,7 +28,7 @@ min_date = pd.to_datetime(data_df['date']).dt.date.min()
 image_url = "https://github.com/netania01/Dicoding-Dashboard-Project/blob/main/Dashboard/Bike%20logo%20concept%20take%202.jpg?raw=true"
 
 with st.sidebar:
-    st.image(image_url, use_container_width=True))
+    st.image(image_url)
     st.markdown("## Filter Rentang Tanggal")
     start_date, end_date = st.date_input(
         label='Pilih Rentang Waktu',
