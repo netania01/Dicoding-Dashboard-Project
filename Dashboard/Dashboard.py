@@ -131,7 +131,6 @@ fig_yearly = px.bar(
     x='Year',
     y='Total Rentals',
     labels={'Year': 'Tahun', 'Total Rentals': 'Total Pengguna'},
-    title='Total Penggunaan Sepeda per Tahun',
     color='Total Rentals',
     color_continuous_scale='reds'  # Mengganti palet warna ke merah
 )
@@ -160,7 +159,6 @@ fig = px.pie(
     workday_usage,
     names='is_workingday',
     values='total_users',
-    title='<b>Rata-rata Penggunaan Sepeda per Hari Kerja vs Akhir Pekan<b>',
     color='is_workingday',  # Menggunakan 'is_workingday' untuk menentukan warna
     color_discrete_sequence=['#FFCDD2', '#F44336']  # Warna dari merah muda terang ke merah terang
 )
@@ -189,7 +187,6 @@ fig_season = px.bar(
     seasonal_usage,
     x='season',
     y='total_users',
-    title='<b>Rata-rata Penggunaan Sepeda per Musim<b>',
     color='total_users',
     color_continuous_scale='reds',  # Mengganti palet warna ke merah
     labels={'season': 'Musim', 'total_users': 'Rata-rata Pengguna Sepeda'}
@@ -239,7 +236,6 @@ fig = px.bar(
         'average_users': 'Rata-rata Jumlah Pengguna',
         'user_type': 'Tipe Pengguna'
     },
-    title='<b>Rata-rata Penggunaan Kasual vs Terdaftar pada Hari Kerja dan Akhir Pekan</b>'
 )
 
 # Update x-axis ticks
