@@ -34,7 +34,7 @@ Proyek ini menganalisis data penggunaan layanan berbagi sepeda berdasarkan datas
 **Install Dependencies:** 
 pip install -r requirements.txt  
 
-**Run Streamlit App:** streamlit run bike-sharing-dashboard.py
+**Run Streamlit App:** streamlit run Dashboard\Dashboard.py
 
 
   
