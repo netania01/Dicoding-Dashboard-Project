@@ -120,10 +120,32 @@ rfm_recap_df = create_rfm_recap(main_df)
 
 # **Visualisasi**
 
+# Menghitung total penggunaan sepeda per tahun (pastikan 'yearly_recap_df' sudah terdefinisi)
+yearly_usage = yearly_recap_df.groupby('Year')['Total Rentals'].sum().reset_index()
+
 # **1. Yearly Bike Rentals**
+fig_yearly = px.bar(
+    yearly_usage,
+    x='Year',
+    y='Total Rentals',
+    labels={'Year': 'Tahun', 'Total Rentals': 'Total Pengguna'},
+    title='Total Penggunaan Sepeda per Tahun',
+    color='Total Rentals',
+    color_continuous_scale='reds'  # Mengganti palet warna ke merah
+)
+
+# Update layout
+fig_yearly.update_layout(
+    xaxis_title='Tahun',
+    yaxis_title='Total Pengguna Sepeda',
+    plot_bgcolor='white',
+    paper_bgcolor='white',
+    title_font=dict(size=20, family='Arial', color='black'),
+    xaxis=dict(tickmode='linear', tick0=yearly_usage['Year'].min(), dtick=1)
+)
+
+# Menampilkan plot di Streamlit
 st.subheader('📅 Yearly Bike Rentals')
-fig_yearly = px.line(yearly_recap_df, x='Year', y='Total Rentals', 
-                     title="Total Bike Rentals by Year", markers=True, template="plotly_dark")
 st.plotly_chart(fig_yearly)
 
 # **2. Working Day vs Weekend Comparison**
