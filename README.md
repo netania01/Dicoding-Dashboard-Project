@@ -31,8 +31,9 @@ Proyek ini menganalisis data penggunaan layanan berbagi sepeda berdasarkan datas
 - python -m venv bike-sharing_dashboard_venv
 - bike-sharing_dashboard_venv\Scripts\activate
 
-**Install Dependencies:** 
-pip install -r requirements.txt  
+**Install Dependencies:**
+- pip freeze > requirements.txt
+- pip install -r requirements.txt  
 
 **Run Streamlit App:** streamlit run bike-sharing-dashboard.py
 
