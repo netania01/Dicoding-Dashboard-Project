@@ -153,7 +153,7 @@ st.plotly_chart(fig_yearly)
 # **2. Working Day vs Weekend Comparison**
 
 # Menghitung rata-rata penggunaan sepeda per hari kerja vs akhir pekan
-workday_usage = day_df.groupby('is_workingday')['total_users'].mean().reset_index()
+workday_usage = data_df.groupby('is_workingday')['total_users'].mean().reset_index()
 
 # Membuat Pie Chart untuk perbandingan penggunaan sepeda antara hari kerja dan akhir pekan
 fig = px.pie(
@@ -212,7 +212,7 @@ st.plotly_chart(fig_season)
 # **4. Casual vs Registered Users on Working Day vs Weekend**
 
 # Menghitung rata-rata penggunaan sepeda per kategori pengguna pada hari kerja dan akhir pekan
-user_contribution = day_df.groupby(['is_workingday']).agg(
+user_contribution = data_df.groupby(['is_workingday']).agg(
     casual_users=('casual_users', 'mean'),
     registered_users=('registered_users', 'mean')
 ).reset_index()
