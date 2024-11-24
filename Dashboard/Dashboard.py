@@ -24,8 +24,11 @@ data_df.reset_index(drop=True, inplace=True)
 max_date = pd.to_datetime(data_df['date']).dt.date.max()
 min_date = pd.to_datetime(data_df['date']).dt.date.min()
 
+#URL Gambar di Github
+image_url = "https://github.com/netania01/Dicoding-Dashboard-Project/blob/master/Dashboard/Bike%20logo%20concept%20take%202.jpg?raw=true"
+
 with st.sidebar:
-    st.image(r'Dashboard\Bike logo concept take 2.jpg', use_container_width=True)
+    st.image(image_url, use_container_width=True)
     st.markdown("## Filter Rentang Tanggal")
     start_date, end_date = st.date_input(
         label='Pilih Rentang Waktu',
