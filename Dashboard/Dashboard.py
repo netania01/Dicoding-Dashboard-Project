@@ -175,10 +175,9 @@ fig.update_layout(
 )
 
 # Menampilkan Pie Chart di Streamlit
+import streamlit as st
 st.subheader('🚲 Bike Usage on Working Day vs Weekend')
 st.plotly_chart(fig)
-
-st.plotly_chart(fig_comparison)
 
 # **3. Bike Rentals by Season**
 
